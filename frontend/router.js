@@ -5,6 +5,7 @@ import MyImage from "./src/pages/MyImage.vue"
 import Notfound from "./src/pages/Notfound.vue"
 import Login from "./src/pages/Login.vue"
 import Signup from "./src/pages/Signup.vue"
+import Profile from "./src/pages/Profile.vue"
 
 const routes = [
   {
@@ -13,6 +14,7 @@ const routes = [
     children: [
       { path: "/", name: "Home", component: Home },
       { path: "/images", name: "MyImages", component: MyImage },
+      { path: "/profile", name: "Profile", component: Profile },
     ],
   },
   {

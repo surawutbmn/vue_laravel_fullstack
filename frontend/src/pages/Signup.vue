@@ -8,7 +8,7 @@ components: { GuestLayout }</script>
 <template>
     <guest-layout>
         <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-            <h2 class="mt-10 text-center text-2xl font-bold tracking-tight text-violet-500">Create new account
+            <h2 class="mt-10 text-center text-2xl font-bold tracking-tight text-violet-400">Create new account
             </h2>
         </div>
         <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
@@ -56,7 +56,8 @@ components: { GuestLayout }</script>
             <p class="mt-10 text-center text-sm/6 text-gray-400">
                 Already have an account?
                 {{ ' ' }}
-                <RouterLink :to="{ name: 'Login' }" class="font-semibold text-indigo-400 hover:text-indigo-300">Login here
+                <RouterLink :to="{ name: 'Login' }" class="font-semibold text-indigo-400 hover:text-indigo-300">Login
+                    here
                 </RouterLink>
             </p>
         </div>
@@ -65,10 +66,7 @@ components: { GuestLayout }</script>
 
 <style scoped>
 form {
-    background-color: #ffffff;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    @apply bg-slate-300 rounded-md p-5 shadow-md
 }
 
 h2 {

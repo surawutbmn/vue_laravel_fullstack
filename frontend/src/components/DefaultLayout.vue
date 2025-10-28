@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-full">
+  <div class="min-h-full bg-gray-900">
     <Disclosure as="nav" class="bg-gray-800" v-slot="{ open }">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="flex h-16 items-center justify-between">
@@ -96,13 +96,7 @@
       </DisclosurePanel>
     </Disclosure>
 
-    <header
-      class="relative bg-gray-300 after:pointer-events-none after:absolute after:inset-x-0 after:inset-y-0 after:border-y after:border-white/10">
-      <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-        <h1 class="text-3xl font-bold tracking-tight text-dark">Dashboard</h1>
-      </div>
-    </header>
-    <main>
+    <main class="px-4">
       <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
         <router-view />
       </div>
@@ -126,8 +120,7 @@ const navigation = [
   { name: 'My images', to: { name: 'MyImages' } },
 ]
 const userNavigation = [
-  { name: 'Your profile', to: { name: 'Home' } },
-  { name: 'Settings', to: { name: 'Home' } },
+  { name: 'Your profile', to: { name: 'Profile' } },
   { name: 'Sign out', to: { name: 'Home' } },
 ]
 </script>
