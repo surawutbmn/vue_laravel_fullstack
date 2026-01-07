@@ -1,6 +1,34 @@
 <script setup>
 import GuestLayout from "../components/GuestLayout.vue";
+import { ref } from "vue";
+import axiosClient from "../axios";
+import router from "../router.js";
 
+const data = ref({
+    name: '',
+    email: '',
+    password: '',
+    password_confirmation: ''
+})
+
+const errors = ref({
+    name: [],
+    email: [],
+    password: []
+})
+
+function submit() {
+    axiosClient.get('/sanctum/csrf-cookie').then(response => {
+        axiosClient.post("/register", data.value)
+            .then(response => {
+                router.push({ name: 'Home' })
+            })
+            .catch(error => {
+                console.log(error.response.data)
+                errors.value = error.response.data.errors;
+            })
+    });
+}
 
 
 components: { GuestLayout }</script>
@@ -12,38 +40,47 @@ components: { GuestLayout }</script>
             </h2>
         </div>
         <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-            <form class="space-y-4" action="#" method="POST">
+            <form @submit.prevent="submit" class="space-y-4">
                 <div>
-                    <label for="name" class="block text-sm font-medium text-gray-500">Full name</label>
+                    <label for="name" class="block text-[1rem]font-medium text-indigo-400">Full name</label>
                     <div class="mt-2">
-                        <input name="name" id="name" required=""
-                            class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm" />
+                        <input name="name" id="name" required="" autocomplete="name" v-model="data.name"
+                            class=" sm:text-sm" />
                     </div>
+                    <p class="text-sm mt-1 text-red-600">
+                        {{ errors.name ? errors.name[0] : '' }}
+                    </p>
                 </div>
                 <div>
-                    <label for="email" class="block text-sm font-medium text-gray-500">Email address</label>
+                    <label for="email" class="block text-[1rem]font-medium text-indigo-400">Email address</label>
                     <div class="mt-2">
-                        <input type="email" name="email" id="email" autocomplete="email" required=""
-                            class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm" />
+                        <input type="email" name="email" id="email" autocomplete="email" v-model="data.email"
+                            required="" class=" sm:text-sm" />
                     </div>
-                </div>
-                <div>
-                    <div class="flex items-center justify-between">
-                        <label for="password" class="block text-sm font-medium text-gray-500">Password</label>
-                    </div>
-                    <div class="mt-2">
-                        <input type="password" name="password" id="password" required=""
-                            class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm" />
-                    </div>
+                    <p class="text-sm mt-1 text-red-600">
+                        {{ errors.email ? errors.email[0] : '' }}
+                    </p>
                 </div>
                 <div>
                     <div class="flex items-center justify-between">
-                        <label for="passwordConfirmation" class="block text-sm font-medium text-gray-500">Confirm
+                        <label for="password" class="block text-[1rem]font-medium text-indigo-400">Password</label>
+                    </div>
+                    <div class="mt-2">
+                        <input type="password" name="password" id="password" required="" v-model="data.password"
+                            class=" sm:text-sm" />
+                    </div>
+                    <p class="text-sm mt-1 text-red-600">
+                        {{ errors.password ? errors.password[0] : '' }}
+                    </p>
+                </div>
+                <div>
+                    <div class="flex items-center justify-between">
+                        <label for="passwordConfirmation" class="block text-[1rem]font-medium text-indigo-400">Confirm
                             password</label>
                     </div>
                     <div class="mt-2">
                         <input type="password" name="password" id="passwordConfirmation" required=""
-                            class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm" />
+                            v-model="data.password_confirmation" class=" sm:text-sm" />
                     </div>
                 </div>
                 <div>
@@ -66,7 +103,7 @@ components: { GuestLayout }</script>
 
 <style scoped>
 form {
-    @apply bg-slate-300 rounded-md p-5 shadow-md
+    @apply bg-slate-700 rounded-md p-5 shadow-md
 }
 
 h2 {
@@ -75,41 +112,31 @@ h2 {
 
 input,
 button {
-    transition: all 0.2s ease-in-out;
+    @apply transition-all duration-200 ease-in-out;
 }
 
 input:focus,
 button:focus {
-    outline: none;
-    box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.5);
+    @apply outline-none ring-2 ring-indigo-500;
 }
 
 button {
-    background-color: #6366f1;
-    border-radius: 0.375rem;
-    padding: 12px 0;
+    @apply bg-indigo-500 rounded-md py-3;
 }
 
 button:hover {
-    background-color: #4f46e5;
+    @apply bg-indigo-700;
 }
 
 button:focus-visible {
-    outline: 2px solid #4f46e5;
+    @apply ring-2 ring-indigo-300;
 }
 
 input {
-    background-color: #f9fafb;
-    border: 1px solid #e5e7eb;
-    padding: 0.75rem;
-    border-radius: 0.375rem;
-    color: #333;
-    /* Dark text color for better contrast */
-    caret-color: #6366f1;
-    /* Custom cursor (caret) color */
+    @apply block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-white/10 ring-1 ring-gray-300 p-2 caret-indigo-500;
 }
 
 input::placeholder {
-    color: #6b7280;
+    @apply text-gray-500;
 }
 </style>

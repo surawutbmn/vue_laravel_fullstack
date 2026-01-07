@@ -1,11 +1,12 @@
 import { createRouter, createWebHistory } from "vue-router"
-import DefaultLayout from "./src/components/DefaultLayout.vue"
-import Home from "./src/pages/Home.vue"
-import MyImage from "./src/pages/MyImage.vue"
-import Notfound from "./src/pages/Notfound.vue"
-import Login from "./src/pages/Login.vue"
-import Signup from "./src/pages/Signup.vue"
-import Profile from "./src/pages/Profile.vue"
+import DefaultLayout from "./components/DefaultLayout.vue"
+import Home from "./pages/Home.vue"
+import MyImage from "./pages/MyImage.vue"
+import Notfound from "./pages/Notfound.vue"
+import Login from "./pages/Login.vue"
+import Signup from "./pages/Signup.vue"
+import Profile from "./pages/Profile.vue"
+import useUserStore from "./store/user.js"
 
 const routes = [
   {
@@ -16,6 +17,15 @@ const routes = [
       { path: "/images", name: "MyImages", component: MyImage },
       { path: "/profile", name: "Profile", component: Profile },
     ],
+    beforeEnter: async (to, from, next) => {
+      try {
+        const userStore = useUserStore()
+        await userStore.fetchUser()
+        next()
+      } catch (error) {
+        next({ name: "Login" }) // Cancel navigation if data fetching fails
+      }
+    },
   },
   {
     path: "/login",

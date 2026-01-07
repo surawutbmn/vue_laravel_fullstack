@@ -1,3 +1,29 @@
+<script setup>
+import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
+import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline'
+import axiosClient from "../axios.js";
+import router from "../router.js";
+import useUserStore from "../store/user.js";
+import { computed } from "vue";
+
+const userStore = useUserStore()
+
+const user = computed(() => userStore.user)
+
+const navigation = [
+  { name: 'Upload', to: { name: 'Home' } },
+  { name: 'My images', to: { name: 'MyImages' } },
+]
+const userNavigation = [
+  { name: 'Your profile', to: { name: 'Profile' } },
+]
+function logout() {
+  axiosClient.post('/logout').then((response) => {
+    router.push({ name: 'Login' })
+  })
+}
+</script>
+
 <template>
   <div class="min-h-full bg-gray-900">
     <Disclosure as="nav" class="bg-gray-800" v-slot="{ open }">
@@ -18,22 +44,18 @@
           </div>
           <div class="hidden md:block">
             <div class="ml-4 flex items-center md:ml-6">
-              <button type="button"
-                class="relative rounded-full p-1 text-gray-400 hover:text-white focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-indigo-500">
-                <span class="absolute -inset-1.5"></span>
-                <span class="sr-only">View notifications</span>
-                <BellIcon class="size-6" aria-hidden="true" />
-              </button>
-
               <!-- Profile dropdown -->
               <Menu as="div" class="relative ml-3">
-                <MenuButton
-                  class="relative flex max-w-xs items-center rounded-full focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">
-                  <span class="absolute -inset-1.5"></span>
-                  <span class="sr-only">Open user menu</span>
-                  <img class="size-8 rounded-full outline outline-1 -outline-offset-1 outline-white/10"
-                    :src="user.imageUrl" alt="" />
-                </MenuButton>
+                <div>
+                  <MenuButton
+                    class="relative flex max-w-xs items-center rounded-full focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">
+                    <span class="absolute -inset-1.5"></span>
+                    <span class="sr-only">Open user menu</span>
+                    <img class="size-8 rounded-full outline outline-1 -outline-offset-1 outline-white/10"
+                      src="https://randomuser.me/api/portraits/men/81.jpg" alt="" />
+                    <span class="text-white ml-3">{{ user?.name || 'loading..' }}</span>
+                  </MenuButton>
+                </div>
 
                 <transition enter-active-class="transition ease-out duration-100"
                   enter-from-class="transform opacity-0 scale-95" enter-to-class="transform scale-100"
@@ -45,6 +67,12 @@
                     <RouterLink :to="item.to"
                       :class="[active ? 'bg-white/5 outline-none' : '', 'block px-4 py-2 text-sm text-gray-300']">{{
                         item.name }}</RouterLink>
+                    </MenuItem>
+                    <MenuItem v-slot="{ active }">
+                    <button @click="logout"
+                      :class="[active ? 'bg-white/5 outline-none' : '', 'w-full text-left block px-4 py-2 text-sm text-gray-300']">
+                      Sign out
+                    </button>
                     </MenuItem>
                   </MenuItems>
                 </transition>
@@ -74,23 +102,21 @@
           <div class="flex items-center px-5">
             <div class="shrink-0">
               <img class="size-10 rounded-full outline outline-1 -outline-offset-1 outline-white/10"
-                :src="user.imageUrl" alt="" />
+                src="https://randomuser.me/api/portraits/men/81.jpg" alt="" />
             </div>
             <div class="ml-3">
-              <div class="text-base/5 font-medium text-white">{{ user.name }}</div>
-              <div class="text-sm font-medium text-gray-400">{{ user.email }}</div>
+              <div class="text-base/5 font-medium text-white">{{ user?.name || 'loading..' }}</div>
+              <div class="text-sm font-medium text-gray-400">{{ user?.email || 'loading..' }}</div>
             </div>
-            <button type="button"
-              class="relative ml-auto shrink-0 rounded-full p-1 text-gray-400 hover:text-white focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-indigo-500">
-              <span class="absolute -inset-1.5"></span>
-              <span class="sr-only">View notifications</span>
-              <BellIcon class="size-6" aria-hidden="true" />
-            </button>
           </div>
           <div class="mt-3 space-y-1 px-2">
             <RouterLink v-for="item in userNavigation" :key="item.name" :to="item.to" class=" block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-white/5
               hover:text-white">
               {{ item.name }}</RouterLink>
+            <DisclosureButton @click="logout"
+              class="block w-full text-left rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">
+              Sign out
+            </DisclosureButton>
           </div>
         </div>
       </DisclosurePanel>
@@ -103,26 +129,5 @@
     </main>
   </div>
 </template>
-
-<script setup>
-import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
-import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/vue/24/outline'
-import { RouterLink } from 'vue-router'
-
-const user = {
-  name: 'Tom Cook',
-  email: 'tom@example.com',
-  imageUrl:
-    'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-}
-const navigation = [
-  { name: 'Upload', to: { name: 'Home' } },
-  { name: 'My images', to: { name: 'MyImages' } },
-]
-const userNavigation = [
-  { name: 'Your profile', to: { name: 'Profile' } },
-  { name: 'Sign out', to: { name: 'Home' } },
-]
-</script>
 
 <style scoped></style>
