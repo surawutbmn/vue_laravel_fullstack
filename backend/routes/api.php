@@ -9,7 +9,6 @@ Route::middleware(['auth:sanctum'])
         Route::get('/user', function (Request $request) {
             return $request->user();
         });
-
-        Route::apiResource('/image', ImageController::class)
+        Route::apiResource('/images', ImageController::class)
             ->only(['index', 'store', 'destroy']);
     });

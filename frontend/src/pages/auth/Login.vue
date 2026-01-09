@@ -1,8 +1,9 @@
 <script setup>
 import { RouterLink } from "vue-router";
-import GuestLayout from "../components/GuestLayout.vue";
-import axiosClient from "../axios";
-import router from "../router.js";
+import GuestLayout from "../../components/layouts/GuestLayout.vue";
+import AuthInput from "../../components/auth/AuthInput.vue";
+import axiosClient from "../../axios";
+import router from "../../router.js";
 import { ref } from "vue";
 
 const data = ref({
@@ -34,11 +35,11 @@ function submit() {
 components: { GuestLayout }</script>
 
 <template>
-    <guest-layout>
+    <GuestLayout>
         <div class="sm:mx-auto sm:w-full sm:max-w-sm">
             <h2 class="mt-10 text-center text-2xl font-bold tracking-tight text-violet-400">Login to your account
             </h2>
-            <div v-if="errorMessage" class="mt-4 py-2 px-3 rounded text-white bg-red-400">
+            <div v-if="errorMessage" class="mt-2 py-2 px-3 rounded text-white bg-red-400">
                 {{ errorMessage }}
             </div>
 
@@ -46,24 +47,16 @@ components: { GuestLayout }</script>
         <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
             <form @submit.prevent="submit" class="space-y-6">
                 <div>
-                    <label for="email" class="block text-[1rem]font-medium text-indigo-400">Email address</label>
-                    <div class="mt-2">
-                        <input type="email" name="email" id="email" autocomplete="email" required=""
-                            v-model="data.email" class="sm:text-sm" />
-                    </div>
+                    <AuthInput label="Email" type="email" id="email" autocomplete="email" v-model="data.email" />
                 </div>
                 <div>
-                    <div class="flex items-center justify-between">
-                        <label for="password" class="block text-[1rem] font-medium text-indigo-400">Password</label>
-                        <div class="text-sm">
-                            <a href="#" class="font-semibold text-indigo-400 hover:text-indigo-300">Forgot
-                                password?</a>
-                        </div>
+                    <AuthInput label="Password" type="password" v-model="data.password" />
+                    <div class="text-sm">
+                        <RouterLink :to="{ name: 'ForgotPassword' }"
+                            class="font-semibold text-indigo-400 hover:text-indigo-300">Forgot
+                            password?</RouterLink>
                     </div>
-                    <div class="mt-2">
-                        <input type="password" name="password" id="password" autocomplete="current-password" required=""
-                            v-model="data.password" class="sm:text-sm" />
-                    </div>
+
                 </div>
                 <div>
                     <button type="submit"
@@ -74,12 +67,11 @@ components: { GuestLayout }</script>
             </form>
             <p class="mt-10 text-center text-sm/6 text-gray-400">
                 Not a member?
-                {{ ' ' }}
                 <RouterLink :to="{ name: 'Signup' }" class="font-semibold text-indigo-400 hover:text-indigo-300">create
                     account</RouterLink>
             </p>
         </div>
-    </guest-layout>
+    </GuestLayout>
 </template>
 
 <style scoped>

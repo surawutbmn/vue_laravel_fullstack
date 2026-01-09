@@ -7,7 +7,7 @@ body {
   @apply h-full m-0 p-0;
 }
 #app {
-  @apply h-full;
+  @apply h-full text-white;
 }
 @layer base {
   body {

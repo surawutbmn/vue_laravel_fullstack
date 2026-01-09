@@ -1,11 +1,13 @@
 <script setup>
 import { ref } from "vue";
 import { PhotoIcon } from "@heroicons/vue/24/outline"
+import axiosClient from "../axios";
+import router from "../router";
 
 const data = ref({
+    label: '',
     image: null,
-    lebel: '',
-    desccription: ''
+    desc: ''
 })
 
 const imagePreview = ref(null)
@@ -17,6 +19,18 @@ const onfileChange = (e) => {
     if (file) {
         imagePreview.value = URL.createObjectURL(file)
     }
+}
+
+function submit() {
+    const formData = new FormData();
+    formData.append('label', data.value.label);
+    formData.append('image', data.value.image);
+    formData.append('desc', data.value.desc);
+    console.log(...formData);
+    axiosClient.post('/api/images', formData)
+        .then(res => {
+            router.push({ name: 'MyImages' })
+        })
 }
 </script>
 
@@ -30,7 +44,7 @@ const onfileChange = (e) => {
                 <div class="border-b border-white/10 pb-12">
                     <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                         <div class="sm:col-span-4">
-                            <label for="label" class="block text-sm/6 font-medium text-white">Lebel</label>
+                            <label for="label" class="block text-sm/6 font-medium text-white">Label</label>
                             <div class="mt-2">
                                 <div
                                     class="flex items-center rounded-md bg-white/5 pl-3 outline outline-1 -outline-offset-1 outline-white/10 focus-within:outline focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-500">
@@ -65,10 +79,9 @@ const onfileChange = (e) => {
                         </div>
 
                         <div class="col-span-full">
-                            <label for="desccription"
-                                class="block text-sm/6 font-medium text-white">Describetion</label>
+                            <label for="description" class="block text-sm/6 font-medium text-white">Description</label>
                             <div class="mt-2">
-                                <textarea name="desccription" id="desccription" v-model="data.desccription" rows="3"
+                                <textarea name="desc" id="desc" v-model="data.desc" rows="3"
                                     class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"></textarea>
                             </div>
                             <p class="mt-3 text-sm/6 text-gray-400">Write a few sentences for this image.</p>

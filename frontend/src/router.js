@@ -1,12 +1,13 @@
 import { createRouter, createWebHistory } from "vue-router"
-import DefaultLayout from "./components/DefaultLayout.vue"
+import DefaultLayout from "./components/layouts/DefaultLayout.vue"
 import Home from "./pages/Home.vue"
 import MyImage from "./pages/MyImage.vue"
 import Notfound from "./pages/Notfound.vue"
-import Login from "./pages/Login.vue"
-import Signup from "./pages/Signup.vue"
+import Login from "./pages/auth/Login.vue"
+import Signup from "./pages/auth/Signup.vue"
 import Profile from "./pages/Profile.vue"
 import useUserStore from "./store/user.js"
+import ForgotPassword from "./pages/auth/ForgotPassword.vue"
 
 const routes = [
   {
@@ -31,6 +32,11 @@ const routes = [
     path: "/login",
     name: "Login",
     component: Login,
+  },
+  {
+    path: "/forgot-password",
+    name: "ForgotPassword",
+    component: ForgotPassword,
   },
   {
     path: "/signup",

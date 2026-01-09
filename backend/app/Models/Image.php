@@ -10,5 +10,10 @@ class Image extends Model
         'path',
         'label',
         'desc',
+        'user_id'
     ];
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
