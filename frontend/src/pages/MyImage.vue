@@ -36,9 +36,10 @@ onMounted(() => {
         <main>
             <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
                 <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                    <div v-for="image in images" :key="image.id" class="bg-white/5 overflow-hidden shadow rounded-lg">
+                    <div v-for="image in images" :key="image.id"
+                        class="p-3 bg-white/5 overflow-hidden rounded shadow-lg">
                         <img :src="image.url" alt="Image" class="w-full h-48 object-contain">
-                        <div class="px-4 py-4">
+                        <div class="space-y-4 flex flex-col">
                             <h3 class="text-lg font-semibold text-gray-300">{{ image.name }}</h3>
                             <p class="text-sm text-gray-400 mb-4">{{ image.label }}</p>
                             <p class="text-sm text-gray-400 mb-4">{{ image.desc }}</p>
