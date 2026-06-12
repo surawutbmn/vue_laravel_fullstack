@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from "vue";
 import axiosClient from "../../axios";
-import GuestLayout from "../../components/layouts/GuestLayout.vue";
+import GuestLayout from "../../layouts/GuestLayout.vue";
 import AuthInput from "../../components/auth/AuthInput.vue";
 
 const email = ref("");

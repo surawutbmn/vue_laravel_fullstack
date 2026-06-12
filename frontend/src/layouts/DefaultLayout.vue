@@ -1,9 +1,9 @@
 <script setup>
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline'
-import axiosClient from "../../axios.js";
-import router from "../../router.js";
-import useUserStore from "../../store/user.js";
+import axiosClient from "../axios.js";
+import router from "../router.js";
+import useUserStore from "../store/user.js";
 import { computed } from "vue";
 
 const userStore = useUserStore()
@@ -64,15 +64,15 @@ function logout() {
                   <MenuItems
                     class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-gray-800 py-1 outline outline-1 -outline-offset-1 outline-white/10">
                     <MenuItem v-for="item in userNavigation" :key="item.name" v-slot="{ active }">
-                    <RouterLink :to="item.to"
-                      :class="[active ? 'bg-white/5 outline-none' : '', 'block px-4 py-2 text-sm text-gray-300']">{{
-                        item.name }}</RouterLink>
+                      <RouterLink :to="item.to"
+                        :class="[active ? 'bg-white/5 outline-none' : '', 'block px-4 py-2 text-sm text-gray-300']">{{
+                          item.name }}</RouterLink>
                     </MenuItem>
                     <MenuItem v-slot="{ active }">
-                    <button @click="logout"
-                      :class="[active ? 'bg-white/5 outline-none' : '', 'w-full text-left block px-4 py-2 text-sm text-gray-300']">
-                      Sign out
-                    </button>
+                      <button @click="logout"
+                        :class="[active ? 'bg-white/5 outline-none' : '', 'w-full text-left block px-4 py-2 text-sm text-gray-300']">
+                        Sign out
+                      </button>
                     </MenuItem>
                   </MenuItems>
                 </transition>

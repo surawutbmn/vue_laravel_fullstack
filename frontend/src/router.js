@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router"
-import DefaultLayout from "./components/layouts/DefaultLayout.vue"
+import DefaultLayout from "./layouts/DefaultLayout.vue"
 import Home from "./pages/Home.vue"
 import MyImage from "./pages/MyImage.vue"
 import Notfound from "./pages/Notfound.vue"

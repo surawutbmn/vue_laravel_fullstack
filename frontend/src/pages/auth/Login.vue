@@ -1,6 +1,6 @@
 <script setup>
 import { RouterLink } from "vue-router";
-import GuestLayout from "../../components/layouts/GuestLayout.vue";
+import GuestLayout from "../../layouts/GuestLayout.vue";
 import AuthInput from "../../components/auth/AuthInput.vue";
 import axiosClient from "../../axios";
 import router from "../../router.js";
