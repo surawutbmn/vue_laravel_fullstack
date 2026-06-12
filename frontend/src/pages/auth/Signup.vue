@@ -46,10 +46,10 @@ components: { GuestLayout }</script>
                     :error="errors.name ? errors.name[0] : ''" />
                 <AuthInput label="Email" type="email" id="email" autocomplete="email" v-model="data.email"
                     :error="errors.email ? errors.email[0] : ''" />
-                <AuthInput label="Password" type="password" id="password" autocomplete="password"
+                <AuthInput label="Password" type="password" id="password" autocomplete="new-password"
                     v-model="data.password" :error="errors.password ? errors.password[0] : ''" />
-                <AuthInput label="Confirm Password" type="password" id="password_confirmation" autocomplete="password"
-                    v-model="data.password_confirmation" />
+                <AuthInput label="Confirm Password" type="password" id="password_confirmation"
+                    autocomplete="new-password" v-model="data.password_confirmation" />
                 <div>
                     <button type="submit"
                         class="flex w-full justify-center rounded-md bg-indigo-500 px-3 py-1.5 text-sm font-semibold text-white hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">

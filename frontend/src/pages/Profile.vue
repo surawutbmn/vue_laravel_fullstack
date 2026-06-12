@@ -1,3 +1,13 @@
+<script setup>
+import { UserCircleIcon, ChevronDownIcon } from '@heroicons/vue/24/outline'
+import useUserStore from "../store/user.js";
+import { computed } from "vue";
+
+const userStore = useUserStore()
+
+const user = computed(() => userStore.user)
+</script>
+
 <template>
     <form>
         <div class="border-b border-white/10 pb-12">
@@ -13,8 +23,8 @@
 
             <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                 <div class="sm:col-span-4">
-                    <label for="first-name" class="block text-sm/6 font-medium text-white">First
-                        name</label>
+                    <label for="first-name" class="block text-sm/6 font-medium text-white">
+                        Username: {{ user?.name || 'loading..' }}</label>
                     <div class="mt-2">
                         <input type="text" name="first-name" id="first-name" autocomplete="given-name"
                             class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6" />
@@ -22,7 +32,8 @@
                 </div>
 
                 <div class="sm:col-span-4">
-                    <label for="email" class="block text-sm/6 font-medium text-white">Email address</label>
+                    <label for="email" class="block text-sm/6 font-medium text-white">Email: {{ user?.email ||
+                        'loading..' }}</label>
                     <div class="mt-2">
                         <input id="email" name="email" type="email" autocomplete="email"
                             class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-indigo-400 outline outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6" />
@@ -38,9 +49,6 @@
     </form>
 </template>
 
-<script setup>
-import { UserCircleIcon, ChevronDownIcon } from '@heroicons/vue/24/outline'
 
-</script>
 
 <style></style>

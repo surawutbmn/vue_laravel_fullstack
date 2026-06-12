@@ -50,7 +50,8 @@ components: { GuestLayout }</script>
                     <AuthInput label="Email" type="email" id="email" autocomplete="email" v-model="data.email" />
                 </div>
                 <div>
-                    <AuthInput label="Password" type="password" v-model="data.password" />
+                    <AuthInput label="Password" id="password" type="password" autocomplete="current-password"
+                        v-model="data.password" />
                     <div class="text-sm">
                         <RouterLink :to="{ name: 'ForgotPassword' }"
                             class="font-semibold text-indigo-400 hover:text-indigo-300">Forgot

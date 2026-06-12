@@ -2,9 +2,8 @@
     <div>
         <label for="email" class="block text-[1rem]font-medium text-indigo-400">{{ label }}</label>
         <div class="mt-2">
-            <input :type="type" :name="label.toLowerCase()" :id="label.toLowerCase()"
-                :autocomplete="label.toLowerCase()" :value="modelValue" required=""
-                @input="emit(`update:modelValue`, $event.target.value)" class="sm:text-sm" />
+            <input :type="type" :name="label.toLowerCase()" :id="id" :autocomplete="autocomplete" :value="modelValue"
+                required="" @input="emit(`update:modelValue`, $event.target.value)" class="sm:text-sm" />
             <p v-if="error" class="text-sm mt-1 text-red-600">
                 {{ error }}
             </p>
@@ -15,6 +14,7 @@
 <script setup>
 defineProps({
     label: String,
+    id: String,
     type: {
         type: String,
         default: 'text'
@@ -24,6 +24,10 @@ defineProps({
         default: ''
     },
     error: {
+        type: String,
+        default: ''
+    },
+    autocomplete: {
         type: String,
         default: ''
     }
